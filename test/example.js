@@ -1,5 +1,4 @@
-const FFP = require('../../ffp-js');
-Object.assign(global, FFP);
+Object.assign(global, require('../../fff.js'));
 
 /**
  * @description Async error handling used go & pipe + try-catch
@@ -11,11 +10,12 @@ Object.assign(global, FFP);
  * @result 111
  */
 const e1 = go(
-    0,
-    a => a + 1,
-    a => a + 10,
-    a => a + 100);
-log(e1);
+  0,
+  a => a + 1,
+  a => a + 10,
+  a => a + 100,
+  log
+);
 
 /**
  * @case Sync - Error
@@ -26,11 +26,11 @@ try {
     0,
     a => { throw { err: 'Error~~'} },
     a => a + 1,
-    a => a + 13);
-
-  console.log(e2);
+    a => a + 13,
+    log
+  );
 } catch (err) {
-  console.log(err);
+  log(err);
 }
 
 /**
@@ -38,13 +38,13 @@ try {
  * @result 5
  */
 (async () => {
-    const t3 = await go(
-        0,
-        a => Promise.resolve(a + 1),
-        a => a + 1,
-        a => a + 3);
-
-    console.log(t3);
+  const t3 = await go(
+    0,
+    a => Promise.resolve(a + 1),
+    a => a + 1,
+    a => a + 3,
+    log
+  );
 })();
 
 /**
@@ -52,15 +52,15 @@ try {
  * @result { err: 'Error~~' }
  */
 (async () =>  {
-    try {
+  try {
     const t4 = await go(
-        0,
-        a => Promise.resolve(a + 1),
-        a => Promise.reject({ err: 'Error~~' }),
-        a => a + 3);
-
-    console.log(t4);
-    } catch (err) {
-    console.log(err);
-    }
-}) ();
+      0,
+      a => Promise.resolve(a + 1),
+      a => Promise.reject({ err: 'Error~~' }),
+      a => a + 3,
+      log
+    );
+  } catch (err) {
+    log(err);
+  }
+})();

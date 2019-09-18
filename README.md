@@ -1,6 +1,6 @@
-# fp-js
+# fff-js
 
-'fp-js' is Functional Javascript library based ES6+
+'fff-js' is Functional Javascript library based ES6+
 
 ## Feature & Supported
 - Async controll & Polymorphism

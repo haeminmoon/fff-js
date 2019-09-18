@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const {
     /**
-     * @description : Base module list
+     * @description : General module list
      */
     map, filter, reduce,
     take, takeAll,

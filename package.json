@@ -1,13 +1,19 @@
 {
-  "name": "fp-js",
+  "name": "fff-js",
   "version": "0.0.1",
-  "description": "Functional javascript",
+  "description": "Functional javascript lib",
   "main": "index.js",
-  "module": "fp.js",
+  "module": "fff.js",
   "sideEffects": false,
   "directories": {
     "test": "test"
   },
+  "keywords": [
+    "fp",
+    "functional",
+    "functional javascript",
+    "iterable"
+  ],
   "files": [
     "general/*",
     "concurrency/*",
@@ -26,14 +32,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/haeminmoon/fp-js.git"
+    "url": "git+https://github.com/haeminmoon/fff-js.git"
   },
-  "author": "",
+  "author": "Haemin Moon <mym0846@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/haeminmoon/fp-js/issues"
+    "url": "https://github.com/haeminmoon/fff-js/issues"
   },
-  "homepage": "https://github.com/haeminmoon/fp-js#readme",
+  "homepage": "https://github.com/haeminmoon/fff-js#readme",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",

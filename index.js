@@ -1,1 +1,1 @@
-module.exports = require('esm')(module, { cache: false })('./fp.js');
+module.exports = require('esm')(module, { cache: false })('./fff.js');
