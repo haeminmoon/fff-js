@@ -1,5 +1,7 @@
+/**
+ * General sector
+ */
 export { default as log } from './general/log.js';
-
 export { default as curry } from './general/curry.js';
 export { default as call } from './general/call';
 export { default as isIterable } from './general/isIterable';
@@ -43,6 +45,9 @@ export { default as merge } from './general/merge';
 export { default as delay } from './general/delay';
 export { default as split } from './general/split';
 
+/**
+ * Lazy sector
+ */
 export { default as mapL } from './lazy/mapL';
 export { default as filterL } from './lazy/filterL';
 export { default as keysL } from './lazy/keysL';
@@ -53,6 +58,9 @@ export { default as rangeL } from './lazy/rangeL';
 export { default as reverseL } from './lazy/reverseL';
 export { default as dropL } from './lazy/dropL';
 
+/**
+ * Concurrency sector
+ */
 export { default as mapC } from './concurrency/mapC';
 export { default as filterC } from './concurrency/filterC';
 export { default as takeC } from './concurrency/takeC';
