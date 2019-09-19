@@ -4,8 +4,6 @@
   "description": "Functional javascript lib",
   "main": "index.js",
   "module": "index.js",
-  "type": "module",
-  "sideEffects": false,
   "directories": {
     "test": "test"
   },
@@ -13,7 +11,8 @@
     "fp",
     "functional",
     "functional javascript",
-    "iterable"
+    "fffjs",
+    "fff-js"
   ],
   "files": [
     "general/*",
@@ -58,10 +57,5 @@
     "webpack-cli": "^3.3.1",
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
-  },
-  "unpkg": "dist/fff.es5.min.js",
-  "jsdelivr": "dist/fff.es5.min.js",
-  "np": {
-    "yarn": false
   }
 }
