@@ -1,12 +1,12 @@
 import toIter from "./toIter";
 import call from "./call";
-import unwrap from "./unwrap";
+import first from "./first";
 import takeFirst from "./takeFirst";
 import isPromise from "./isPromise";
 
 export default function reduce(f, acc, iter) {
   if (arguments.length == 1) return (..._) => reduce(f, ..._);
-  if (arguments.length == 2) return reduce(f, unwrap(takeFirst(iter = toIter(acc))), iter);
+  if (arguments.length == 2) return reduce(f, first(takeFirst(iter = toIter(acc))), iter);
 
   iter = toIter(iter);
   return call(

@@ -35,7 +35,6 @@ export { default as not } from './general/not';
 export { default as toString } from './general/toString';
 export { default as toIter } from './general/toIter';
 export { default as wrap } from './general/wrap';
-export { default as unwrap } from './general/unwrap';
 export { default as find } from './general/find';
 export { default as first } from './general/first';
 export { default as last } from './general/last';

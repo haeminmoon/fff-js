@@ -126,7 +126,6 @@ __webpack_require__.d(fff_namespaceObject, "not", function() { return not; });
 __webpack_require__.d(fff_namespaceObject, "toString", function() { return toString_toString; });
 __webpack_require__.d(fff_namespaceObject, "toIter", function() { return toIter; });
 __webpack_require__.d(fff_namespaceObject, "wrap", function() { return wrap; });
-__webpack_require__.d(fff_namespaceObject, "unwrap", function() { return unwrap; });
 __webpack_require__.d(fff_namespaceObject, "find", function() { return general_find; });
 __webpack_require__.d(fff_namespaceObject, "first", function() { return first; });
 __webpack_require__.d(fff_namespaceObject, "last", function() { return last; });
@@ -261,9 +260,9 @@ function takeAll(iter) {
 /* harmony default export */ var general_filter = (curry(function filter(f, iter) {
   return takeAll(lazy_filterL(f, iter));
 }));
-// CONCATENATED MODULE: ./general/unwrap.js
-function unwrap([a]) {
-  return a;
+// CONCATENATED MODULE: ./general/first.js
+function first(arr) {
+  return arr[0];
 }
 // CONCATENATED MODULE: ./general/takeFirst.js
 
@@ -280,7 +279,7 @@ function takeFirst(iter) {
 
 function reduce(f, acc, iter) {
   if (arguments.length == 1) return (..._) => reduce(f, ..._);
-  if (arguments.length == 2) return reduce(f, unwrap(takeFirst(iter = toIter(acc))), iter);
+  if (arguments.length == 2) return reduce(f, first(takeFirst(iter = toIter(acc))), iter);
 
   iter = toIter(iter);
   return call(
@@ -430,13 +429,9 @@ function wrap(a) {
     iter,
     lazy_filterL(f),
     takeFirst,
-    unwrap
+    first
   );
 }));
-// CONCATENATED MODULE: ./general/first.js
-function first(arr) {
-  return arr[0];
-}
 // CONCATENATED MODULE: ./general/last.js
 function last(arr) {
   return arr[arr.length - 1];
@@ -548,7 +543,6 @@ function *reverseL(arr) {
 /**
  * General sector
  */
-
 
 
 
