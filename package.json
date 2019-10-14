@@ -1,9 +1,10 @@
 {
   "name": "fff-js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Functional javascript lib",
   "main": "index.js",
-  "module": "index.js",
+  "module": "fff.js",
+  "type": "module",
   "directories": {
     "test": "test"
   },
@@ -11,6 +12,7 @@
     "fp",
     "functional",
     "functional javascript",
+    "fff",
     "fffjs",
     "fff-js"
   ],
