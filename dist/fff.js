@@ -105,7 +105,7 @@ __webpack_require__.d(fff_namespaceObject, "isUndefined", function() { return is
 __webpack_require__.d(fff_namespaceObject, "map", function() { return general_map; });
 __webpack_require__.d(fff_namespaceObject, "filter", function() { return general_filter; });
 __webpack_require__.d(fff_namespaceObject, "reduce", function() { return reduce; });
-__webpack_require__.d(fff_namespaceObject, "go", function() { return go_go; });
+__webpack_require__.d(fff_namespaceObject, "go", function() { return go; });
 __webpack_require__.d(fff_namespaceObject, "pipe", function() { return pipe; });
 __webpack_require__.d(fff_namespaceObject, "take", function() { return general_take; });
 __webpack_require__.d(fff_namespaceObject, "takeFirst", function() { return takeFirst; });
@@ -124,7 +124,7 @@ __webpack_require__.d(fff_namespaceObject, "identity", function() { return ident
 __webpack_require__.d(fff_namespaceObject, "nop", function() { return general_nop; });
 __webpack_require__.d(fff_namespaceObject, "not", function() { return not; });
 __webpack_require__.d(fff_namespaceObject, "toString", function() { return toString_toString; });
-__webpack_require__.d(fff_namespaceObject, "toIter", function() { return toIter; });
+__webpack_require__.d(fff_namespaceObject, "toIter", function() { return toIter_toIter; });
 __webpack_require__.d(fff_namespaceObject, "wrap", function() { return wrap; });
 __webpack_require__.d(fff_namespaceObject, "find", function() { return general_find; });
 __webpack_require__.d(fff_namespaceObject, "first", function() { return first; });
@@ -190,23 +190,24 @@ function isEmpty(arr) {
 function isUndefined(a) {
   return a === undefined;
 }
+// CONCATENATED MODULE: ./general/toIter.js
+
+
+function toIter_toIter(a) {
+  return isIterable(a) ? a[Symbol.iterator]() : (function *(){}());
+}
 // CONCATENATED MODULE: ./lazy/mapL.js
 
 
 
+
 /* harmony default export */ var lazy_mapL = (curry(function *mapL(f, iter) {
-  for (const a of iter) yield call(a, f);
+  for (const a of toIter_toIter(iter)) yield call(a, f);
 }));
-// CONCATENATED MODULE: ./general/toIter.js
-
-
-function toIter(a) {
-  return isIterable(a) ? a[Symbol.iterator]() : (function *(){}());
-}
 // CONCATENATED MODULE: ./general/nop.js
-const nop_nop = Symbol.for('nop');
+const nop = Symbol.for('nop');
 
-/* harmony default export */ var general_nop = (nop_nop);
+/* harmony default export */ var general_nop = (nop);
 // CONCATENATED MODULE: ./general/take.js
 
 
@@ -215,7 +216,7 @@ const nop_nop = Symbol.for('nop');
 /* harmony default export */ var general_take = (curry(function take(l, iter) {
   if (l === 0) return [];
   let res = [];
-  iter = toIter(iter);
+  iter = toIter_toIter(iter);
   return function recur() {
     let cur;
     while (!(cur = iter.next()).done) {
@@ -249,8 +250,14 @@ function takeAll(iter) {
 
 
 
+
+
 /* harmony default export */ var lazy_filterL = (curry(function *filterL(f, iter) {
-  for (const a of iter) if(call(a, f)) yield a;
+  for (const a of toIter(iter)) {
+    const b = call(a, f);
+    if(isPromise(b)) yield b.then(b => b ? a : Promise.reject(general_nop)); 
+    else yield a;
+  }
 }));
 // CONCATENATED MODULE: ./general/filter.js
 
@@ -261,8 +268,8 @@ function takeAll(iter) {
   return takeAll(lazy_filterL(f, iter));
 }));
 // CONCATENATED MODULE: ./general/first.js
-function first(arr) {
-  return arr[0];
+function first([a]) {
+  return a;
 }
 // CONCATENATED MODULE: ./general/takeFirst.js
 
@@ -277,18 +284,19 @@ function takeFirst(iter) {
 
 
 
+
 function reduce(f, acc, iter) {
   if (arguments.length == 1) return (..._) => reduce(f, ..._);
-  if (arguments.length == 2) return reduce(f, first(takeFirst(iter = toIter(acc))), iter);
+  if (arguments.length == 2) return reduce(f, call(takeFirst(iter = toIter_toIter(acc)), first), iter);
 
-  iter = toIter(iter);
+  iter = toIter_toIter(iter);
   return call(
     acc, 
     function recur(acc) {
       let cur;
       while (!(cur = iter.next()).done) {
-        acc = isPromise(acc) 
-          ? acc.then(a => f(acc, a), e => e == nop ? acc : Promise.reject(e))
+        acc = isPromise(cur.value) 
+          ? cur.value.then(a => f(acc, a), e => e == general_nop ? acc : Promise.reject(e))
           : f(acc, cur.value);
         
         if (isPromise(acc)) return acc.then(recur);
@@ -301,7 +309,7 @@ function reduce(f, acc, iter) {
 
 
 
-function go_go(..._) {
+function go(..._) {
   return reduce(call, _);
 }
 
@@ -342,6 +350,7 @@ function object(iter) {
   return reduce((obj, [k, v]) => (obj[k] = v, obj), {}, iter);
 }
 // CONCATENATED MODULE: ./general/pick.js
+
 
 
 
@@ -425,7 +434,7 @@ function wrap(a) {
 
 
 /* harmony default export */ var general_find = (curry(function find(f, iter) {
-  return go_go(
+  return go(
     iter,
     lazy_filterL(f),
     takeFirst,
@@ -466,7 +475,7 @@ function range(..._) {
 
 
 function merge(ks, vs) {
-  return go_go(
+  return go(
     rangeL(ks.length || vs.length),
     lazy_mapL(i => [ks[i], vs[i]]),
     takeAll
