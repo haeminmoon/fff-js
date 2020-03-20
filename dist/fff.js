@@ -89,7 +89,10 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
+
+// NAMESPACE OBJECT: ./fff.js
 var fff_namespaceObject = {};
 __webpack_require__.r(fff_namespaceObject);
 __webpack_require__.d(fff_namespaceObject, "log", function() { return general_log; });
@@ -124,7 +127,7 @@ __webpack_require__.d(fff_namespaceObject, "identity", function() { return ident
 __webpack_require__.d(fff_namespaceObject, "nop", function() { return general_nop; });
 __webpack_require__.d(fff_namespaceObject, "not", function() { return not; });
 __webpack_require__.d(fff_namespaceObject, "toString", function() { return toString_toString; });
-__webpack_require__.d(fff_namespaceObject, "toIter", function() { return toIter_toIter; });
+__webpack_require__.d(fff_namespaceObject, "toIter", function() { return toIter; });
 __webpack_require__.d(fff_namespaceObject, "wrap", function() { return wrap; });
 __webpack_require__.d(fff_namespaceObject, "find", function() { return general_find; });
 __webpack_require__.d(fff_namespaceObject, "first", function() { return first; });
@@ -193,7 +196,7 @@ function isUndefined(a) {
 // CONCATENATED MODULE: ./general/toIter.js
 
 
-function toIter_toIter(a) {
+function toIter(a) {
   return isIterable(a) ? a[Symbol.iterator]() : (function *(){}());
 }
 // CONCATENATED MODULE: ./lazy/mapL.js
@@ -202,7 +205,7 @@ function toIter_toIter(a) {
 
 
 /* harmony default export */ var lazy_mapL = (curry(function *mapL(f, iter) {
-  for (const a of toIter_toIter(iter)) yield call(a, f);
+  for (const a of toIter(iter)) yield call(a, f);
 }));
 // CONCATENATED MODULE: ./general/nop.js
 const nop = Symbol.for('nop');
@@ -216,7 +219,7 @@ const nop = Symbol.for('nop');
 /* harmony default export */ var general_take = (curry(function take(l, iter) {
   if (l === 0) return [];
   let res = [];
-  iter = toIter_toIter(iter);
+  iter = toIter(iter);
   return function recur() {
     let cur;
     while (!(cur = iter.next()).done) {
@@ -252,11 +255,12 @@ function takeAll(iter) {
 
 
 
+
 /* harmony default export */ var lazy_filterL = (curry(function *filterL(f, iter) {
   for (const a of toIter(iter)) {
     const b = call(a, f);
-    if(isPromise(b)) yield b.then(b => b ? a : Promise.reject(general_nop)); 
-    else yield a;
+    if (isPromise(b)) yield b.then(b => b ? a : Promise.reject(general_nop)); 
+    else if (b) yield a;
   }
 }));
 // CONCATENATED MODULE: ./general/filter.js
@@ -287,9 +291,9 @@ function takeFirst(iter) {
 
 function reduce(f, acc, iter) {
   if (arguments.length == 1) return (..._) => reduce(f, ..._);
-  if (arguments.length == 2) return reduce(f, call(takeFirst(iter = toIter_toIter(acc)), first), iter);
+  if (arguments.length == 2) return reduce(f, call(takeFirst(iter = toIter(acc)), first), iter);
 
-  iter = toIter_toIter(iter);
+  iter = toIter(iter);
   return call(
     acc, 
     function recur(acc) {
@@ -617,7 +621,7 @@ function *reverseL(arr) {
 
 // CONCATENATED MODULE: ./browser.js
 
-window.fff = window.F = { ...fff_namespaceObject };
+window.fff = window._ = { ...fff_namespaceObject };
 
 
 /***/ })

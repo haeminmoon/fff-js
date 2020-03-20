@@ -12,7 +12,5 @@ module.exports = function (api) {
       }
     ]
   ];
-  // const plugins = isCommonJs ? ["transform-es2015-modules-simple-commonjs"] : [];
-  // return { presets, plugins };
   return { presets };
 };
