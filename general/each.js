@@ -1,7 +1,7 @@
 import curry from "./curry";
 import call from "./call";
-import reduce from "./reduce";
+import map from "./map";
 
 export default curry(function each(f, iter) {
-  return call(reduce((_, a) => f(a), null, iter), _ => iter);
+  return map(a => call(f(a), _ => a), iter);
 });
