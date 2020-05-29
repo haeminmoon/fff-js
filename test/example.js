@@ -64,3 +64,10 @@ try {
     log(err);
   }
 })();
+
+go(
+  Promise.resolve([Promise.resolve(1),2,3]),
+  map(a => a + 10),
+  filter(a => a%2 == 0),
+  log
+)
